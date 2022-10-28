@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // lombok plugin
+    implementation('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+
+    // test 환경
+    testImplementation('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+}
+
+test {
+    useJUnitPlatform()
+}
