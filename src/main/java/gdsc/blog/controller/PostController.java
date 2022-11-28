@@ -28,7 +28,7 @@ public class PostController {
     }
 
     @ApiOperation(value = "게시글 전체 조회", notes = "모든 게시글을 조회합니다.")
-    @PostMapping("")
+    @GetMapping("")
     public ResponseEntity<List<Post>> findAll(){
         return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
     }
