@@ -2,6 +2,7 @@ package gdsc.blog.service;
 
 import gdsc.blog.domain.Music;
 import gdsc.blog.dto.music.WriteMusicReq;
+import gdsc.blog.exception.AlreadyExistException;
 import gdsc.blog.repository.MusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,8 +17,12 @@ import java.util.NoSuchElementException;
 public class MusicService {
     private final MusicRepository musicRepository;
 
+    // Save with Duplicate Name
     @Transactional
     public Music save(WriteMusicReq writeMusicReq){
+        if(musicRepository.findByName(writeMusicReq.getName()).isPresent()) {
+            throw new AlreadyExistException("해당 이름을 가진 음악이 존재합니다!");
+        }
         Music music = Music.builder()
                 .name(writeMusicReq.getName())
                 .singer(writeMusicReq.getSinger())
@@ -35,6 +40,11 @@ public class MusicService {
                 () -> new NoSuchElementException("ID에 해당하는 Music이 없습니다.")
         );
     }
+
+//    @Transactional(readOnly = true)
+//    public Music checkDuplicatedName(String name, WriteMusicReq writeMusicReq){
+//
+//    }
 
     @Transactional
     public Music updateById(Long id, WriteMusicReq writeMusicReq){

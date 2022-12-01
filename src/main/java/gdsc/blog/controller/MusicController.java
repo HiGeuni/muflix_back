@@ -1,6 +1,7 @@
 package gdsc.blog.controller;
 
 import gdsc.blog.domain.Music;
+import gdsc.blog.dto.Error.ErrorResponse;
 import gdsc.blog.dto.music.WriteMusicReq;
 import gdsc.blog.service.MusicService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class MusicController {
     
     @ApiOperation(value = "음악 등록", notes = "음악을 등록합니다.")
     @PostMapping("")
-    public ResponseEntity<Music> save(@RequestBody WriteMusicReq writeMusicReq){
+    public ResponseEntity<Object> save(@Valid @RequestBody WriteMusicReq writeMusicReq){
         return new ResponseEntity<>(musicService.save(writeMusicReq), HttpStatus.CREATED);
     }
 
